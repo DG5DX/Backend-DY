@@ -13,16 +13,17 @@ import {
     putActivarInactivar,
 } from "../controllers/categorias.js";
 
+
+
 //registrar una categoria
 router.post("/",[
     validarJWT,
     check("descripcion","es necesaria una descripcion de la categoria").notEmpty(),
-    check("estado","el estado debe 0 o 1").optional().isInt({min:0, max:1}),
     validarCampos   
 ], postCategorias);
 
 //modificar una categoria
-router.put("/categoria/:id",[
+router.put("/:id",[
     validarJWT,
     check("id","el id no es valido").isMongoId(),
     check("id","el id no existe").custom(helperCategorias.validarId),
@@ -30,7 +31,7 @@ router.put("/categoria/:id",[
 ], putCategorias);
 
 //traer todas las categorias
-router.get("/categorias",[
+router.get("/",[
     validarJWT
 ], getCategorias);
 

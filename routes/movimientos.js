@@ -18,21 +18,24 @@ import {
 //registrar un nuevo movimiento
 router.post("/",[
     validarJWT,
-    check("tipo","el tipo debe ser un numero").isNumeric(),
+    check("tipo","el tipo debe ser un numero").isString(),
     check("numeroFactura","la factura debe ser un texto").isString(),
     check("fecha","el formato de la fecha es incorrecto").isString(),
-    check("articulos","articulos debe ser un array").isArray(),
+    /* check("articulos","articulos debe ser un array").isArray(),
     check("articulos.*.id","el id no es valido").isMongoId(),
     check("articulos.*.id","el id no existe").custom(helperMovimientos.validarIdArticulo),
     check("articulos.*.cantidad","cantidad debe ser un numero").isNumeric(),
-    check("valor","debe ser un valor numerico").isNumeric(),
+    check("articulos.*.precio", "El precio no puede ir vacio").trim().notEmpty(),
+    check("articulos.*.precio", "debe ser un valor numerico").isNumeric(),
+    check("articulos.*.valor", "El valor no puede ir vacio").trim().notEmpty(),
+    check("articulos.*.valor", "debe ser un valor numerico").isNumeric(),
+    check("articulos.*.iva", "El iva no puede ir vacio").trim().notEmpty(), */
     check("total","debe ser un valor numerico").isNumeric(),
-    check("estado","el estado debe ser 0 o 1").optional().isInt({min:0, max:1}),
     validarCampos
 ], postMovimientos);
 
 //actualizar un movimiento
-router.put("/actualizar/:ide",[
+router.put("/:ide",[
     validarJWT,
     check("ide","el id no es valido").isMongoId(),
     check("ide","el id no existe").custom(helperMovimientos.validarId),
@@ -40,7 +43,7 @@ router.put("/actualizar/:ide",[
 ],putMovimientos);
 
 //traer todos los movimientos
-router.get("/movimientos",[
+router.get("/",[
     validarJWT,
 ], getMovimientos);
 
@@ -65,6 +68,10 @@ router.put("/:accion/:id",[
     validarCampos
 ], putActivarInactivar);
 
+
+
+//de aqui para abajo son las peticiones especificas
+
 //traer movimientos por tipo
 router.get("/tipo/:tipo",[
     validarJWT
@@ -73,8 +80,8 @@ router.get("/tipo/:tipo",[
 //traer movimientos entre fechas
 router.get("/fechas/:fechaInicio/:fechaFin",[
     validarJWT,
-    check("fechaInicio","la fecha no es valida, por favor digitela de la siguiente manera:'2024-08-05'").isDate(),
-    check("fechaFin","la fecha no es valida, por favor digitela de la siguiente manera:'2024-08-05'").isDate(),
+    check("fechaInicio","la fecha no es valida debe ser algo como esto '2024-05-01'").isDate(),
+    check("fechaFin","la fecha no es valida debe ser algo como esto '2024-05-01'").isDate(),
     validarCampos
 ],getMovimientosFechas)
 

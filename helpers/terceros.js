@@ -1,4 +1,4 @@
-import tercerosModel from "../models/terceros.js";
+import tercerosModel from "../models/proveedores.js";
 
 
 

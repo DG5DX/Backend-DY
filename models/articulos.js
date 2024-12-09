@@ -3,8 +3,8 @@ const articulosSchema = new mongoose.Schema({
     nombre:{type:String, required:true},
     precio:{type:Number, required:true},
     stock:{type:Number, required:true},
-    imagen:{type:String, required:true},
-    categoria:{type:String, required:true},
+    // imagen:{type:String, required:true},
+    categoria:{type: mongoose.Schema.Types.ObjectId, ref: "categorias", required:true},
     estado:{type:Number, required:true, default:1} //1:activo 0:inactivo
 },{
     timestamps:true

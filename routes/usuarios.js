@@ -13,6 +13,7 @@ import {
 } from '../controllers/usuarios.js'
 const router = Router()
 
+
 //registrar un usuario
 router.post("/",[
     check("email","el email no puede ir vacio").notEmpty(),
@@ -29,7 +30,7 @@ router.put("/modificar/:id",[
 ],putUsuarios)
 
 //traer todos los usuarios
-router.get("/usuarios",[
+router.get("/",[
     validarJWT,
 ],getUsuarios)
 
@@ -42,7 +43,7 @@ router.get("/usuario/:id",[
 ],getUsuario)
 
 //activar o inactivar un usuario
-router.put("/usuario/:accion/:id",[
+router.put("/:accion/:id",[
     validarJWT,
     check("accion","debe digitar 'activar o inactivar'").isIn(["activar","inactivar"]),
     check("id","el id no es valido").isMongoId(),

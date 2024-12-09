@@ -39,7 +39,7 @@ const putArticulos = async (req, res) => {
 
 const getArticulos = async (req, res) => {
     try {
-        const articulos = await ArticulosModel.find();
+        const articulos = await ArticulosModel.find().populate("categoria");
         res.json({ articulos });
     } catch (error) {
         res
@@ -130,7 +130,7 @@ const getArticuloStock = async (req, res) => {
         const { cantidad } = req.params
         const articulos = await ArticulosModel.find({ stock: { $lt: cantidad } })
         if(articulos.length ==0){
-            res.json("no se encontro ningun articulo")
+            res.json("no se encontraron articulos")
         }
         else{
         res.json({ articulos })

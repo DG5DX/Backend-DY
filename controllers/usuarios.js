@@ -2,44 +2,48 @@ import usuariosModel from "../models/usuarios.js";
 import { generarJWT } from "../middlewares/validarjwt.js";
 import bcrypt from 'bcrypt'
 
+
 const postUsuarios = async (req, res) => {
     try {
-        const { email, contraseña } = req.body
+        const { nombre, email, contraseña } = req.body
         const contraseñaEncriptada = bcrypt.hashSync(contraseña, 10)
         const usuario = new usuariosModel({
+            nombre,
             email,
             contraseña: contraseñaEncriptada
         })
         await usuario.save()
         res.json({ usuario })
     } catch (error) {
-        res.status(400).json({ error: "error tras realizar la operacion" })
+        res.status(400).json({ error: "erro al realizaer la operacion" })
         console.log(error);
     }
 }
 
+
 const putUsuarios = async (req, res) => {
     try {
-        const { contraseña ,estado } = req.body
-        const contraseñaEncriptada = bcrypt.hashSync(contraseña, 10)
+        const { ...datos } = req.body
         const { id } = req.params
-        const usuario = await usuariosModel.findByIdAndUpdate(id, {contraseña:contraseñaEncriptada, estado },{ new: true })
+        const usuario = await usuariosModel.findByIdAndUpdate(id, datos,{ new: true })
         res.json({ usuario })
     } catch (error) {
-        res.status(400).json({ error: "error en la operación" })
+        res.status(400).json({ error: "error en la operacion" })
         console.log(error);
     }
 }
+
 
 const getUsuarios = async (req, res) => {
     try {
         const usuarios = await usuariosModel.find()
         res.json({ usuarios })
     } catch (error) {
-        res.status(400).json({error:"error en la operación"})
+        res.status(400).json({error:"error en la operacion"})
         console.log(error);
     }
 }
+
 
 const getUsuario = async (req, res) => {
     try {
@@ -47,10 +51,11 @@ const getUsuario = async (req, res) => {
         const usuario = await usuariosModel.findById(id)
         res.json({ usuario })
     } catch (error) {
-        res.status(400).json({error:"error en la operación"})
+        res.status(400).json({error:"error en la operacion"})
         console.log(error);
     }
 }
+
 
 const putActivarInactivar = async (req, res)=>{
     try {
@@ -65,9 +70,10 @@ const putActivarInactivar = async (req, res)=>{
             res.json({inactivar})
         }
     } catch (error) {
-        res.status(400).json({error:"ocurrio un error tras realizar la operación"})
+        res.status(400).json({error:"parece que hubo un error al realizar la operacion"})
     }
 }
+
 
 const postLogin = async (req, res) => {
     const { email, contraseña } = req.body;
@@ -95,7 +101,7 @@ const postLogin = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ msg: "fallo en el sistema" });
+        res.status(500).json({ msg: "algo salio mal hable con el webMaster" });
     }
 };
 
@@ -107,3 +113,4 @@ export{
     putActivarInactivar,
     postLogin
 }
+
