@@ -13,7 +13,7 @@ import clientes from './routes/clientes.js'
 const app= express()
 app.use(express.json())
 app.use(cors())
-app.use(express.static,("public"))
+app.use(express.static('public'))
 app.use("/api/articulos", articulos)
 app.use("/api/categorias",categorias)
 app.use("/api/movimientos",movimientos)
